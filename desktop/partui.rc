@@ -7,6 +7,8 @@
         <Action name="web-search"/>
         <Action name="open-browser"/>
         <Separator/>
+        <Action name="set-encoding"/>
+        <Separator/>
         <Action name="edit_find"/>
         <Menu name="history"><text>S&amp;crollback</text>
             <Action name="file_save_as" group="session-history-operations"/>
