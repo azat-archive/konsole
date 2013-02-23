@@ -1149,7 +1149,6 @@ void Session::resetMonitorAlreadyChanged(const char* /* data */, int /* len */)
     _monitorAlreadyChanged = false;
 }
 
-
 void Session::setAddToUtmp(bool add)
 {
     _addToUtmp = add;
