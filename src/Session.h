@@ -457,7 +457,7 @@ public slots:
     Q_SCRIPTABLE void setMonitorTriggerOnChange(bool);
 
     /**
-     * Return true of monitor mst trigger only on change
+     * Return true if monitor must trigger only on change
      */
     Q_SCRIPTABLE bool isMonitorTriggerOnChange() const;
 
