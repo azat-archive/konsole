@@ -667,8 +667,6 @@ signals:
      */
     void selectionChanged(const QString& text);
 
-
-
 private slots:
     void done(int, QProcess::ExitStatus);
 
