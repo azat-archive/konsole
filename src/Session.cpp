@@ -103,6 +103,8 @@ Session::Session(QObject* parent) :
     , _monitorSilence(false)
     , _notifiedActivity(false)
     , _silenceSeconds(10)
+    , _monitorTriggerOnChange(false)
+    , _monitorAlreadyChanged(false)
     , _autoClose(true)
     , _closePerUserRequest(false)
     , _addToUtmp(true)
@@ -144,6 +146,8 @@ Session::Session(QObject* parent) :
             this, SIGNAL(selectionChanged(QString)));
     connect(_emulation, SIGNAL(imageResizeRequest(QSize)),
             this, SIGNAL(resizeRequest(QSize)));
+    connect(_emulation, SIGNAL(sendData(const char*, int)),
+            this, SLOT(resetMonitorAlreadyChanged(const char*, int)));
 
     //create new teletype for I/O with shell process
     openTeletype(-1);
@@ -641,6 +645,10 @@ void Session::activityStateSet(int state)
     // TODO: should this hardcoded interval be user configurable?
     const int activityMaskInSeconds = 15;
 
+    if (_monitorAlreadyChanged) {
+        return;
+    }
+
     if (state == NOTIFYBELL) {
         emit bellRequest(i18n("Bell in session '%1'", _nameTitle));
     } else if (state == NOTIFYACTIVITY) {
@@ -664,6 +672,8 @@ void Session::activityStateSet(int state)
         state = NOTIFYNORMAL;
     if (state == NOTIFYSILENCE && !_monitorSilence)
         state = NOTIFYNORMAL;
+
+    _monitorAlreadyChanged = true;
 
     emit stateChanged(state);
 }
@@ -1122,6 +1132,23 @@ void Session::setMonitorSilenceSeconds(int seconds)
         _silenceTimer->start(_silenceSeconds * 1000);
     }
 }
+
+void Session::setMonitorTriggerOnChange(bool onChange)
+{
+    _monitorTriggerOnChange = onChange;
+}
+
+bool Session::isMonitorTriggerOnChange() const
+{
+    return _monitorTriggerOnChange;
+}
+
+void Session::resetMonitorAlreadyChanged(const char* /* data */, int /* len */)
+{
+    // Reset monitor activity trigger.
+    _monitorAlreadyChanged = false;
+}
+
 
 void Session::setAddToUtmp(bool add)
 {

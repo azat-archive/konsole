@@ -451,6 +451,22 @@ public slots:
     Q_SCRIPTABLE void setMonitorSilenceSeconds(int seconds);
 
     /**
+     * Trigger monitor activity/silence on change only
+     * Usefull for tmux
+     */
+    Q_SCRIPTABLE void setMonitorTriggerOnChange(bool);
+
+    /**
+     * Return true of monitor mst trigger only on change
+     */
+    Q_SCRIPTABLE bool isMonitorTriggerOnChange() const;
+
+    /**
+     * Reset _monitorAlreadyChanged state to false.
+     */
+    Q_SCRIPTABLE void resetMonitorAlreadyChanged(const char* data, int len);
+
+    /**
      * Sets whether flow control is enabled for this terminal
      * session.
      */
@@ -651,6 +667,8 @@ signals:
      */
     void selectionChanged(const QString& text);
 
+
+
 private slots:
     void done(int, QProcess::ExitStatus);
 
@@ -709,6 +727,8 @@ private:
     int            _silenceSeconds;
     QTimer*        _silenceTimer;
     QTimer*        _activityTimer;
+    bool           _monitorTriggerOnChange;
+    bool           _monitorAlreadyChanged;
 
     bool           _masterMode;
     bool           _autoClose;

@@ -683,6 +683,10 @@ void SessionController::setupExtraActions()
     action = collection->addAction("monitor-silence", toggleAction);
     connect(action, SIGNAL(toggled(bool)), this, SLOT(monitorSilence(bool)));
 
+    toggleAction = new KToggleAction(i18n("Monitor trigger on &Change"), this);
+    action = collection->addAction("monitor-trigger-on-change", toggleAction);
+    connect(action, SIGNAL(toggled(bool)), this, SLOT(monitorTriggerOnChange(bool)));
+
     // Character Encoding
     _codecAction = new KCodecAction(i18n("Set &Encoding"), this);
     _codecAction->setIcon(KIcon("character-set"));
@@ -1339,10 +1343,17 @@ void SessionController::monitorActivity(bool monitor)
 {
     _session->setMonitorActivity(monitor);
 }
+
 void SessionController::monitorSilence(bool monitor)
 {
     _session->setMonitorSilence(monitor);
 }
+
+void SessionController::monitorTriggerOnChange(bool onChange)
+{
+    _session->setMonitorTriggerOnChange(onChange);
+}
+
 void SessionController::updateSessionIcon()
 {
     // Visualize that the session is broadcasting to others
@@ -1356,6 +1367,7 @@ void SessionController::updateSessionIcon()
         }
     }
 }
+
 void SessionController::sessionTitleChanged()
 {
     if (_sessionIconName != _session->iconName()) {

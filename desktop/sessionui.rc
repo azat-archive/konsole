@@ -28,6 +28,7 @@
         <Menu name="view">
             <Action name="monitor-silence" group="session-view-operations"/>
             <Action name="monitor-activity" group="session-view-operations"/>
+            <Action name="monitor-trigger-on-change" group="session-view-operations"/>
             <Separator group="session-view-operations"/>
             <Action name="enlarge-font" group="session-view-operations"/>
             <Action name="shrink-font" group="session-view-operations"/>

@@ -235,6 +235,7 @@ private slots:
     void clearHistoryAndReset();
     void monitorActivity(bool monitor);
     void monitorSilence(bool monitor);
+    void monitorTriggerOnChange(bool onChange);
     void renameSession();
     void switchProfile(Profile::Ptr profile);
     void handleWebShortcutAction();
