@@ -645,7 +645,7 @@ void Session::activityStateSet(int state)
     // TODO: should this hardcoded interval be user configurable?
     const int activityMaskInSeconds = 15;
 
-    if (_monitorAlreadyChanged) {
+    if (_monitorTriggerOnChange && _monitorAlreadyChanged) {
         return;
     }
 
